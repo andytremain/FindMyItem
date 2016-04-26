@@ -1,0 +1,13 @@
+﻿<p>Directing you to.. @ViewBag.SiteURL</p>
+
+
+<td>@Html.ActionLink("Go to Site!", 
+                                             "GoToSite", 
+                                             "Home", 
+                                             new
+                                                {
+                                                    category = @Model.SelectedCategoryEnum,
+                                                    siteName = @item.SiteName,
+                                                    item = @Model.Item
+                                                }, 
+                                             new { target="_blank" })</td>

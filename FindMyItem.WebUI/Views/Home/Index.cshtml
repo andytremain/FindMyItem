@@ -1,0 +1,136 @@
+﻿@model FindMyItem.WebUI.Models.SearchViewModel
+           
+@{
+    Html.EnableClientValidation();
+}
+
+<div id="searchAgain">
+    <button id="btnSearchAgain" class="btn" name="btnGetItem" onclick="ToggleSearch(); return false;">Search Again!</button>
+</div>
+
+<div id="recentSearches">
+    @if (Model.SearchHistory.Count > 0)
+    {
+           @Html.ActionLink(String.Format("Recent Searches ({0})", Model.SearchHistory.Count), "RecentSearches")       
+    }
+</div>
+
+@using (Html.BeginForm("Index", "Home", null, FormMethod.Post, new { @id="frmSearch", @class = "form-horizontal", @role = "form" }))
+{   
+    <div class="form-group">
+        @Html.LabelFor(m => m.SelectedCategoryId, new {@class = "col-sm-2 control-label"})
+        <div class="col-sm-10">
+            @Html.DropDownListFor(o => o.SelectedCategoryId, Model.Categories, new { @class = "form-control" } )
+        </div>
+    </div>
+    <!--
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="AdvancedSearch">Advanced Search:</label>
+        Html.CheckBoxFor(o => o.AdvancedSearch, new { class = "form-control", id="chkAdvancedSearch" } )
+
+        <div id="advancedSearchWarning" style="display: none;">
+            <p><b>Please note the advanced search may take a few minutes.</b></p>
+        </div>
+    </div>-->
+    
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Item:</label>
+        <div class="col-sm-10">
+            <div class="input-group">
+                <!--<span class="input-group-addon">
+                    //Html.CheckBoxFor(o => o.AdvancedSearch, new { id="chkAdvancedSearch", title="Advanced Search" } )
+                </span>-->
+                <!--<input type="text" class="form-control">-->
+                @Html.TextBoxFor(o => o.Item, new { @class = "form-control", @placeholder = "Type in your item!" } ) 
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Go!</button>
+                </span>
+            </div><!-- /input-group -->
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+            <div class="input-group">
+                <p class="form-control-static">@Html.ValidationMessageFor(o => o.Item, "You must type in an item!") </p>
+                
+                <div id="advancedSearchWarning" style="display: none;">
+                    <p class="form-control-static"><b>Please note: The advanced search may take a few minutes.</b></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--
+    <div class="form-group">    
+        <label class="col-sm-2 control-label">Item:</label>
+        <div class="col-sm-10">
+            <p class="form-control-static">@Html.TextBoxFor(o => o.Item, new { @class = "form-control", @placeholder = "Type in your item!" } ) </p>
+            <p class="form-control-static">@Html.ValidationMessageFor(o => o.Item, "You must type in an item!") </p>
+        </div>
+    </div>-->
+    
+    <!--<div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button name="btnGetItem" type="submit" class="btn">Search</button>
+        </div>        
+    </div>-->
+}
+
+@if (Model.SearchResult != null)
+{
+    @Html.Partial("_SearchResults", Model);
+}
+
+@if (Model.FeedResult != null)
+{ 
+    @Html.Partial("_FeedResults", Model.FeedResult);
+}
+
+<div class="well">
+    <h5>Popular Searches</h5>
+    
+    <h6>General</h6>
+    <ul class="list-inline">
+        <li><a href="/Search/classifieds/sony play station 4" title="Search for Sony Playstation 4">Sony Play Station 4</a></li> | 
+        <li><a href="/Search/classifieds/macbook pro" title="Search for Macbook Pro">Macbook Pro</a></li> |
+        <li><a href="/Search/classifieds/ipad air" title="Search for IPad Air">IPad Air</a></li> |
+        <li><a href="/Search/classifieds/samsung galaxy s5" title="Search for Samsung galaxy s5">Samsung Galaxy S5</a></li> |
+        <li><a href="/Search/classifieds/iphone 6" title="Search for IPhone 6">IPhone 6</a></li> |
+        <li><a href="/Search/classifieds/microsoft xbox" title="Search for Microsoft Xbox">Microsoft Xbox</a></li>
+    </ul>
+
+    <h6>Motors [Cars]</h6>
+    <ul class="list-inline">
+        <li><a href="/Search/motors/Focus ST" title="Search for Focus ST">Focus ST</a></li> |
+        <li><a href="/Search/motors/nissan qashqai" title="Search for Nissan Qashqai">Nissan Qashqai</a></li> |
+        <li><a href="/Search/motors/ford fiesta" title="Search for Ford Fiesta">Ford Fiesta</a></li> |
+        <li><a href="/Search/motors/vauxhall corsa" title="Search for Vauxhall Corsa">Vauxhall Corsa</a></li> |
+        <li><a href="/Search/motors/vauxhall astra" title="Search for Vauxhall Astra">Vauxhall Astra</a></li> |
+        <li><a href="/Search/motors/volkswagen golf" title="Search for Volkswagen Golf">Volkswagen Golf</a></li> |
+        <li><a href="/Search/motors/bmw 520d" title="Search for BMW 5 series">BMW 520d</a></li>
+    </ul>
+    
+    <h6>Motors [Bikes]</h6>
+    <ul class="list-inline">
+        <li><a href="/Search/motors/bmw s1000r sport" title="Search for BMW S1000R Sport">BMW S1000R Sport</a></li> |
+        <li><a href="/Search/motors/ktm 1190 adventure" title="Search for KTM 1190 Adventure">KTM 1190 Adventure</a></li> |
+        <li><a href="/Search/motors/ducati 899 panigale" title="Search for Ducati 899 Panigale">Ducati 899 Panigale</a></li> |
+        <li><a href="/Search/motors/honda cb500f " title="Search for Honda CB500F">Honda CB500F </a></li> |
+        <li><a href="/Search/motors/harley-davidson fxsb breakout " title="Search for Harley-Davidson FXSB Breakout">Harley-Davidson FXSB Breakout</a></li> |
+        <li><a href="/Search/motors/suzuki gsxr 600" title="Search for Suzuki GSXR 600">Suzuki GSXR 600</a></li> |
+        <li><a href="/Search/motors/yamaha r6" title="Search for Yamaha R6">Yamaha R6</a></li>
+    </ul>
+
+    <h6>Jobs</h6>
+    <ul class="list-inline">
+        <li><a href="/Search/jobs/.net developer" title="Search for .Net Developer jobs">.NET Developer</a></li> |
+        <li><a href="/Search/jobs/dentist" title="Search for Denist jobs">Dentist</a></li> |
+        <li><a href="/Search/jobs/accountant" title="Search for Accountant jobs">Accountant</a></li> |
+        <li><a href="/Search/jobs/building serveyor" title="Search for Building Surveyor jobs">Building Surveyor</a></li> |
+        <li><a href="/Search/jobs/construction" title="Search for Construction jobs">Construction</a></li> |
+        <li><a href="/Search/jobs/mechanic" title="Search for Mechanic jobs">Mechanic</a></li> |
+        <li><a href="/Search/jobs/business developer" title="Search for Business Developer jobs">Business Developer</a></li>
+    </ul>
+</div>

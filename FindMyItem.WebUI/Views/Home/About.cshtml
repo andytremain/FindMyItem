@@ -1,0 +1,19 @@
+﻿<h2>About</h2>
+<p>
+     Search for your item on many sites with just one click as we do the hard work for you!
+</p>
+
+<p>
+    We're currently searching:
+
+    <ul>
+        @foreach (var site in ViewBag.Sites)
+        {
+            <li><a href="@site.URL" target="_blank">@site.Name</a></li>
+        }
+    </ul>
+</p>
+
+<p>
+    If you think we should be checking more sites for you then please contact us with a suggested site.
+</p>

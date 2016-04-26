@@ -1,0 +1,29 @@
+﻿@using System.Globalization
+@model FindMyItem.WebUI.Models.SearchViewModel
+          
+<div class="panel-heading"><h3>Search Results</h3></div>
+
+<div id="searchResults">
+    @if (Model.SearchResult.SearchTime != null)
+    {
+        <p>Found results in @Model.SearchResult.SearchTime.Value.TotalSeconds.ToString(CultureInfo.InvariantCulture) seconds</p>
+    }
+    else
+    { 
+        <p>[SAVED RESULT SET] @Html.ActionLink("Refresh", "RefreshResults", new { category = Model.SelectedCategoryTypeEnum.ToString(), item = Model.Item })</p>
+    }
+
+    <ul class="list-group">
+        @foreach (var item in Model.SearchResult.Results)
+        {
+            if (item.ItemCount <= 0)
+            {
+                continue;
+            }
+            <li class="list-group-item">
+                <span class="badge">@item.ItemCount</span>
+                <a href="@item.SiteURL" title="Go to site @item.SiteName" target="_blank">@item.SiteName</a>
+            </li>
+        }
+    </ul>
+</div>

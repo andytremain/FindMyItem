@@ -1,0 +1,38 @@
+﻿@using FindMyItem.Domain
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Info</h2>
+
+<h3>Cache</h3>
+<ul>
+    <li>Cache Path: @ViewBag.CachePath</li>
+    <li>Cache File Exists: @ViewBag.CacheFileExists</li>
+    <li>Cache in Memory: @ViewBag.CacheInMemory</li>
+    <li>Site cached: @ViewBag.SiteCached</li>
+</ul>
+
+<h3>Active Sites</h3>
+<ul>
+    @foreach(var s in ViewBag.ActiveSites)
+    {
+        <li>@s.Name</li>
+    }
+</ul>
+
+<h3>Sites Active With Errors</h3>
+<ul>
+    @foreach (var s in ViewBag.ActiveWithErrors)
+    {
+        <li>@s.Name</li>
+    }
+</ul>
+
+<h3>Disabled Sites</h3>
+<ul>
+    @foreach(var s in ViewBag.DisabledSites)
+    {
+        <li>@s.Name</li>
+    }
+</ul>

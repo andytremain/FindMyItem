@@ -1,0 +1,33 @@
+﻿@model HashSet<FindMyItem.Domain.SearchModelDto>
+
+@{
+    ViewBag.Title = "Recent Searches";
+}
+
+<h2>Recent Searches</h2>
+
+@if (Model == null)
+{
+    <p>No recent searches found.</p>
+}
+else
+{ 
+    <ul>        
+        @foreach (var sh in Model)
+        {
+            <li class="recentSearchTerm">@sh.Item</li>
+    
+            <ul class="recentSearchCategories">
+                <li class="categoryText">Categories: </li>
+    
+                <ul class="recentSearchCategories">
+                    <li class="category">
+                        @Html.ActionLink(sh.Item.ToString(), "GetRecentSearch", new { category = sh.CategoryId, item = sh.Item })
+                        &nbsp;
+                        [@Html.ActionLink("Remove Search", "RemoveSearch", new { category = sh.CategoryId, item = sh.Item })]
+                    </li>
+                </ul>
+            </ul>    
+        }
+</ul>
+}
